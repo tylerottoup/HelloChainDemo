@@ -31,18 +31,28 @@ const ConnectButton = (props) => {
             }
 
             props.setAccountAddress(addressList[0] && addressList[0].address);
-            if (!props.proposalTab) {
-                props.getDelegations(addressList[0] && addressList[0].address);
-                props.getDelegatedValidatorsDetails(
+            if (!props.proposalTab && !props.stake) {
+                props.getUnBondingDelegations(
                     addressList[0] && addressList[0].address
                 );
+                props.fetchRewards(addressList[0] && addressList[0].address);
             }
-            props.getUnBondingDelegations(
-                addressList[0] && addressList[0].address
+            if (!props.proposalTab) {
+                props.getDelegations(addressList[0] && addressList[0].address);
+            }
+            props.getBalance(
+                addressList[0] && addressList[0].address,
+                (res) => {
+                    props.fetchVestingBalance(
+                        addressList[0] && addressList[0].address
+                    );
+                    if (!props.proposalTab) {
+                        props.getDelegatedValidatorsDetails(
+                            addressList[0] && addressList[0].address
+                        );
+                    }
+                }
             );
-            props.getBalance(addressList[0] && addressList[0].address);
-            props.fetchVestingBalance(addressList[0] && addressList[0].address);
-            props.fetchRewards(addressList[0] && addressList[0].address);
             localStorage.setItem(
                 'of_co_address',
                 encode(addressList[0] && addressList[0].address)
@@ -74,6 +84,7 @@ ConnectButton.propTypes = {
     showDialog: PropTypes.func.isRequired,
     showMessage: PropTypes.func.isRequired,
     proposalTab: PropTypes.bool,
+    stake: PropTypes.bool,
 };
 
 const stateToProps = (state) => {

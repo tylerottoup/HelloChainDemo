@@ -118,6 +118,16 @@ const Cards = (props) => {
                                     }
                                 );
 
+                            // eslint-disable-next-line no-unused-vars
+                            let inProgress =
+                                props.proposalDetails &&
+                                Object.keys(props.proposalDetails).length &&
+                                Object.keys(props.proposalDetails).find(
+                                    (key) => key === proposal.id
+                                );
+                            inProgress =
+                                !inProgress && props.proposalDetailsInProgress;
+
                             return (
                                 <div
                                     key={index}
@@ -252,7 +262,7 @@ const Cards = (props) => {
                                                               'DD-MMM-YYYY HH:mm:ss'
                                                           )
                                                         : ''
-                                                } -> 
+                                                } ->
                                                 ${
                                                     proposal &&
                                                     proposal.voting_end_time
@@ -362,6 +372,7 @@ const Cards = (props) => {
 Cards.propTypes = {
     handleShow: PropTypes.func.isRequired,
     proposalDetails: PropTypes.object.isRequired,
+    proposalDetailsInProgress: PropTypes.bool.isRequired,
     tallyDetails: PropTypes.object.isRequired,
     voteDetails: PropTypes.array.isRequired,
     cards: PropTypes.array,
@@ -374,6 +385,7 @@ Cards.propTypes = {
 const stateToProps = (state) => {
     return {
         proposalDetails: state.proposals.proposalDetails.value,
+        proposalDetailsInProgress: state.proposals.proposalDetails.inProgress,
         proposalsInProgress: state.proposals._.inProgress,
         voteDetails: state.proposals.voteDetails.value,
         tallyDetails: state.proposals.tallyDetails.value,
