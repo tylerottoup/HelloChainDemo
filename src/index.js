@@ -10,18 +10,24 @@ import reducer from './reducers';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import * as serviceWorker from './serviceWorker';
 
+// Zero gas fees
+window.keplr.defaultOptions = {
+    sign: {
+        preferNoSetFee: true,
+    },
+};
+
 const store = createStore(
     reducer,
     composeWithDevTools({
         trace: true,
-    })(applyMiddleware(
-        thunk)),
+    })(applyMiddleware(thunk))
 );
 
 const app = (
     <Provider store={store}>
         <BrowserRouter>
-            <Route component={App}/>
+            <Route component={App} />
         </BrowserRouter>
     </Provider>
 );
