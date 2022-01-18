@@ -8,7 +8,6 @@ import { Button } from '@material-ui/core';
 import { showProposalDialog } from '../../actions/proposals';
 import moment from 'moment';
 import { tally } from '../../utils/numberFormats';
-import DotsLoading from '../../components/DotsLoading';
 
 const Cards = (props) => {
     const [page, setPage] = useState(1);
@@ -119,6 +118,7 @@ const Cards = (props) => {
                                     }
                                 );
 
+                            // eslint-disable-next-line no-unused-vars
                             let inProgress =
                                 props.proposalDetails &&
                                 Object.keys(props.proposalDetails).length &&
