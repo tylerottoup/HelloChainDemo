@@ -11,10 +11,15 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import * as serviceWorker from './serviceWorker';
 
 // Zero gas fees
-window.keplr.defaultOptions = {
-    sign: {
-        preferNoSetFee: true,
-    },
+window.onload = async () => {
+    if (!window.keplr){
+        return
+    }
+    window.keplr.defaultOptions = {
+        sign: {
+            preferNoSetFee: true,
+        },
+    };
 };
 
 const store = createStore(
